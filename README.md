@@ -1,5 +1,7 @@
-# Network Drive Mounter Script
+# Network Drive Mounter Script for WSL
 =====================================
+
+**Important Note:** This script is designed for users of Windows Subsystem for Linux (WSL) in corporate network environments with shared network drives. It allows you to access network drives through WSL.
 
 This script is used to mount and unmount network drives on a Linux system.
 
