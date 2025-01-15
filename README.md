@@ -5,6 +5,31 @@
 
 This script is used to mount and unmount network drives on a Linux system.
 
+## Installation
+---------------
+
+To install the script and make it available system-wide:
+
+1. Copy the script to a directory in your PATH, for example `/usr/local/bin`:
+
+```bash
+sudo cp mount_network_disk.sh /usr/local/bin/mount_network_disk
+```
+
+2. Make the script executable:
+
+```bash
+sudo chmod +x /usr/local/bin/mount_network_disk
+```
+
+3. Verify the installation by running:
+
+```bash
+which mount_network_disk
+```
+
+You should see `/usr/local/bin/mount_network_disk` as output.
+
 ## Usage
 ---------
 
