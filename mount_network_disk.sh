@@ -31,6 +31,20 @@ unmount_disk() {
 
 # Funzione per montare il disco
 mount_disk() {
+    # Chiedi conferma
+    read -p "Are you sure you want to mount drive $DRIVE_LETTER in $MOUNT_DIR? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Nn]$ ]]; then
+        echo "Mount cancelled."
+        exit 1
+    fi
+
+    # Controlla se il disco è già montato
+    if mountpoint -q $MOUNT_DIR; then
+        echo "$MOUNT_DIR is already mounted."
+        exit 1
+    fi
+
     # Crea la directory di montaggio se non esiste
     sudo mkdir -p $MOUNT_DIR
 
