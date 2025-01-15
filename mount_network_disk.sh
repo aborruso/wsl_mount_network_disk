@@ -22,6 +22,12 @@ MOUNT_DIR="/mnt/$(echo "$DRIVE_LETTER" | tr '[:upper:]' '[:lower:]')"
 # Funzione per unmount
 unmount_disk() {
     if mountpoint -q $MOUNT_DIR; then
+        read -p "Are you sure you want to unmount $MOUNT_DIR? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Nn]$ ]]; then
+            echo "Unmount cancelled."
+            return 1
+        fi
         echo "Unmounting $MOUNT_DIR..."
         sudo umount $MOUNT_DIR
         if [ $? -eq 0 ]; then
