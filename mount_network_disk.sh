@@ -76,3 +76,19 @@ unmount_disk
 
 # Monta il disco
 mount_disk
+
+# Funzione per chiedere se navigare nella directory
+navigate_to_mount() {
+    read -p "Do you want to navigate to $MOUNT_DIR? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        cd $MOUNT_DIR
+        echo "Changed directory to $MOUNT_DIR"
+        exec $SHELL  # Riavvia la shell per mantenere il nuovo percorso
+    else
+        echo "Staying in current directory."
+    fi
+}
+
+# Chiedi se navigare nella directory montata
+navigate_to_mount
