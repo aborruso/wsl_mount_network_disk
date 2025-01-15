@@ -7,6 +7,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+# Verifica se il disco di rete esiste
+if ! ls /mnt/ 2>/dev/null | grep -q "^$(echo "$1" | tr '[:upper:]' '[:lower:]')$"; then
+    echo "Il disco di rete $1 non esiste."
+    exit 1
+fi
+
 # Lettera del disco (convertita in maiuscolo per il montaggio)
 DRIVE_LETTER=$(echo "$1" | tr '[:lower:]' '[:upper:]')
 
