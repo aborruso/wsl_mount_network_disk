@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# Controlla se è stata passata una lettera del disco come argomento
+# Check if a drive letter was passed as argument
 if [ -z "$1" ]; then
     echo "Usage: $0 <drive_letter>"
     echo "Example: $0 T"
     exit 1
 fi
 
-# Verifica se il disco di rete esiste
+# Check if the network drive exists
 if ! ls /mnt/ 2>/dev/null | grep -q "^$(echo "$1" | tr '[:upper:]' '[:lower:]')$"; then
     echo "Il disco di rete $1 non esiste."
     exit 1
 fi
 
-# Lettera del disco (convertita in maiuscolo per il montaggio)
+# Drive letter (converted to uppercase for mounting)
 DRIVE_LETTER=$(echo "$1" | tr '[:lower:]' '[:upper:]')
 
-# Directory di montaggio (sempre in minuscolo)
+# Mount directory (always lowercase)
 MOUNT_DIR="/mnt/$(echo "$DRIVE_LETTER" | tr '[:upper:]' '[:lower:]')"
 
-# Funzione per unmount
+# Unmount function
 unmount_disk() {
     if mountpoint -q $MOUNT_DIR; then
         read -p "Are you sure you want to unmount $MOUNT_DIR? (y/n) " -n 1 -r
@@ -41,9 +41,9 @@ unmount_disk() {
     fi
 }
 
-# Funzione per montare il disco
+# Mount function
 mount_disk() {
-    # Chiedi conferma
+    # Ask for confirmation
     read -p "Are you sure you want to mount drive $DRIVE_LETTER in $MOUNT_DIR? (y/n) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Nn]$ ]]; then
@@ -51,16 +51,16 @@ mount_disk() {
         exit 1
     fi
 
-    # Controlla se il disco è già montato
+    # Check if the drive is already mounted
     if mountpoint -q $MOUNT_DIR; then
         echo "$MOUNT_DIR is already mounted."
         exit 1
     fi
 
-    # Crea la directory di montaggio se non esiste
+    # Create mount directory if it doesn't exist
     sudo mkdir -p $MOUNT_DIR
 
-    # Monta il disco
+    # Mount the drive
     echo "Mounting $DRIVE_LETTER: to $MOUNT_DIR..."
     sudo mount -t drvfs "$DRIVE_LETTER:" $MOUNT_DIR
     if [ $? -eq 0 ]; then
@@ -71,13 +71,13 @@ mount_disk() {
     fi
 }
 
-# Unmount del disco se già montato
+# Unmount drive if already mounted
 unmount_disk
 
-# Monta il disco
+# Mount the drive
 mount_disk
 
-# Funzione per chiedere se navigare nella directory
+# Function to ask if navigating to the directory
 navigate_to_mount() {
     read -p "Do you want to navigate to $MOUNT_DIR? (y/n) " -n 1 -r
     echo
@@ -90,5 +90,5 @@ navigate_to_mount() {
     fi
 }
 
-# Chiedi se navigare nella directory montata
+# Ask if navigating to the mounted directory
 navigate_to_mount
