@@ -36,7 +36,7 @@ You should see `/usr/local/bin/mount_network_disk` as output.
 To use this script, simply run it with the drive letter as an argument. For example:
 
 ```bash
-./mount_network_disk.sh T
+mount_network_disk.sh T
 ```
 
 This will mount the network drive with the letter T in the `/mnt/t` directory.
